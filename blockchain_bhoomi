@@ -1,0 +1,58 @@
+#Demonstarte a student Attendance ledger \
+ 
+class StudentAttendanceLedger:
+    def __init__(self):
+        self.attendance_data = {}
+
+    def add_student(self, student_name):
+        if student_name not in self.attendance_data:
+            self.attendance_data[student_name] = []
+            print(f"Student {student_name} added to the ledger.")
+        else:
+            print(f"Student {student_name} already exists in the ledger.")
+
+    def mark_attendance(self, student_name, present):
+        if student_name in self.attendance_data:
+            self.attendance_data[student_name].append(present)
+            status = 'Present' if present else 'Absent'
+            print(f"Attendance for {student_name}: {status}")
+        else:
+            print(f"Student {student_name} not found in the ledger.")
+
+    def display_attendance(self):
+        print("\n--- Attendance Ledger ---")
+        for student, attendance in self.attendance_data.items():
+            attendance_status = ['Present' if status else 'Absent' for status in attendance]
+            print(f"{student}: {', '.join(attendance_status)}")
+        print("\n")
+
+    def get_attendance_summary(self, student_name):
+        if student_name in self.attendance_data:
+            total_classes = len(self.attendance_data[student_name])
+            total_present = sum(self.attendance_data[student_name])
+            total_absent = total_classes - total_present
+            print(f"{student_name} - Total Classes: {total_classes}, Present: {total_present}, Absent: {total_absent}")
+        else:
+            print(f"Student {student_name} not found in the ledger.")
+
+
+# Example usage:
+ledger = StudentAttendanceLedger()
+
+# Add students
+ledger.add_student("Alice")
+ledger.add_student("Bob")
+
+# Mark attendance
+ledger.mark_attendance("Alice", True)  # Alice is present
+ledger.mark_attendance("Alice", False)  # Alice is absent
+ledger.mark_attendance("Bob", True)  # Bob is present
+ledger.mark_attendance("Bob", True)  # Bob is present
+
+# Display full attendance record
+ledger.display_attendance()
+
+# Get individual student attendance summary
+ledger.get_attendance_summary("Alice")
+ledger.get_attendance_summary("Bob")
+
